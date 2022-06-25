@@ -21,33 +21,42 @@ from models import NearEarthObject, CloseApproach
 def load_neos(neo_csv_path):
     """Read near-Earth object information from a CSV file.
 
-    :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
+    :param neo_csv_path: A path to a CSV file
+    containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # TODO: Load NEO data from the given CSV file.
-    res=[]
+    res = []
     with open(neo_csv_path) as csv_file:
         load_neo = csv.DictReader(csv_file)
-        for each_line in load_neo :
-            res.append(NearEarthObject(designation = each_line['pdes'],name=each_line['name']  , hazardous=each_line['pha'] , diameter =each_line['diameter']))
-    
+        for each_line in load_neo:
+            res.append(
+                NearEarthObject(
+                    designation=each_line['pdes'],
+                    name=each_line['name'],
+                    hazardous=each_line['pha'],
+                    diameter=each_line['diameter']))
 
     return res
 
 
 def load_approaches(cad_json_path):
     """Read close approach data from a JSON file.
-
-    :param cad_json_path: A path to a JSON file containing data about close approaches.
+    
+    :param cad_json_path: A path to a JSON file
+    containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # TODO: Load close approach data from the given JSON file.
     res = []
     with open(cad_json_path) as json_file:
         load_approache = json.load(json_file)
-        load_approache = [dict(zip(load_approache["fields"], data)) for data in load_approache["data"]]
+        load_approache = [dict(zip(load_approache["fields"], data))
+                          for data in load_approache["data"]]
         for each_line in load_approache:
-            res.append(CloseApproach(designation=each_line['des'], time=each_line['cd'], distance=each_line['dist'], velocity=each_line['v_rel']))
-
+            res.append(
+                CloseApproach(
+                    designation=each_line['des'],
+                    time=each_line['cd'],
+                    distance=each_line['dist'],
+                    velocity=each_line['v_rel']))
 
     return res
